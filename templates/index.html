@@ -34,17 +34,23 @@
         }
 
     </style>
+
 </head>
 
 <body>
     <div class="wrapper">
         <h1>Pest Testing</h1>
-        <input type="file" name="inputFile" id="inputFile">
+
+        <form method="post" action="/" enctype="multipart/form-data">
+            <input type="file" name="inputFile" id="inputFile">
+            <button class="btn btn-primary">Identify</button>
+        </form>
 
         <div class="image-preview" id="imagePreview">
-            <img src="" alt="Image Preview" class="image-preview__image">
+            <img src="" alt="Image Preview" class="image-preview__image" id="user_image">
             <span class="image-preview__default-text">Image Preview</span>
         </div>
+
     </div>
 
     <script>
@@ -73,8 +79,8 @@
                 previewImage.setAttribute("src", "");
             }
         });
-
     </script>
+
 </body>
 
 </html>
