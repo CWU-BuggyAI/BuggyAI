@@ -1,1 +1,1 @@
-web: gunicorn buggy:BuggyAI
+web: gunicorn buggy:app
