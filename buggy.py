@@ -17,9 +17,7 @@ def upload_file():
             image = request.files['inputFile']
             filename = secure_filename(image.filename)
 
-            print(filename)
-
-            image.save(os.path.join(app.config['UPLOAD_FOLDER'], image.filename))
+            image.save(os.path.join(os.getcwd(), image.filename))
 
             runPrediction(image.filename)
             return redirect(request.url)

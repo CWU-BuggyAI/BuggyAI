@@ -11,9 +11,9 @@ def runPrediction(img_name):
     trained_model = tf.keras.models.load_model('models/mobilenetv2.h5')
     print('Model loaded successfully')
 
-    img_path = 'static/uploads/' + img_name
+    #img_path = 'static/uploads/' + img_name
 
-    img = image.load_img(img_path, target_size=(224, 224))
+    img = image.load_img(img_name, target_size=(224, 224))
     x = image.img_to_array(img)
     x = np.expand_dims(x, axis=0)
     x = preprocess_input(x)
@@ -23,7 +23,7 @@ def runPrediction(img_name):
     # (one such list for each sample in the batch)
     print('Predicted:', decode_predictions(preds, top=3)[0])
 
-    if os.path.exists(img_path):
-        os.remove(img_path)
+    if os.path.exists(os.path.join(os.getcwd(), img_name)):
+        os.remove(os.path.join(os.getcwd(), img_name))
 
     # trained_model.summary()
