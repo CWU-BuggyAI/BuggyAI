@@ -8,7 +8,7 @@ import numpy as np
 def runPrediction(img_name):
     
     print('Loading model...')
-    trained_model = tf.keras.models.load_model('models/resnet_test.h5')
+    trained_model = tf.keras.models.load_model('models/mobilenetv2.h5')
     print('Model loaded successfully')
 
     img_path = 'static/uploads/' + img_name
@@ -22,5 +22,8 @@ def runPrediction(img_name):
     # decode the results into a list of tuples (class, description, probability)
     # (one such list for each sample in the batch)
     print('Predicted:', decode_predictions(preds, top=3)[0])
+
+    if os.path.exists(img_path):
+        os.remove(img_path)
 
     # trained_model.summary()

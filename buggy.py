@@ -21,7 +21,7 @@ def upload_file():
 
             image.save(os.path.join(app.config['UPLOAD_FOLDER'], image.filename))
 
-            # runPrediction(image.filename)
+            runPrediction(image.filename)
             return redirect(request.url)
 
     return render_template("index.html")
