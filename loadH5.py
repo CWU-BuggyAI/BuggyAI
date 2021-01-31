@@ -39,10 +39,7 @@ def runPrediction(img_name):
     print("donezoooo")
 
 
-        
-"""
     if os.path.exists(os.path.join(os.getcwd(), img_name)):
         os.remove(os.path.join(os.getcwd(), img_name))
 
     # trained_model.summary()
-"""
