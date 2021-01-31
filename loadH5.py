@@ -13,7 +13,7 @@ def runPrediction(img_name):
 
     #img_path = 'static/uploads/' + img_name
 
-    img = image.load_img(img_name, target_size=(224, 224))
+    img = image.load_img(img_name, target_size=(180, 180))
     x = image.img_to_array(img)
     x = np.expand_dims(x, axis=0)
     x = preprocess_input(x)
