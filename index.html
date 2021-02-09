@@ -97,23 +97,31 @@
 
                 console.log('image uploaded now posting..')
 
-                $('#upload_form').submit(function() {
+                $('#upload_form').on('submit', function() {
 
-                    let form = $('upload_form')[0];
+                    let form = $('#upload_form')[0];
                     let formData = new FormData(form);
-                    
-                    $.ajax({
-                        url: 'https://buggyai.com/prediction',
+
+                    let res = $.ajax({
+                        url: 'https://www.buggyai.com/prediction',
                         data: formData,
                         processData: false,
                         contentType: false,
-                        type: 'POST',
-                        success: function(data){
+                        method: 'post',
+                        type: 'post',
+                        dataType: 'json',
+                        async: true,
+                        success: function(data, status) {
+                            console.log(data);
+                            console.log(status);
                             alert(data);
-                        }
-                        
+                        },
+                        error: function(jqXHR, exception) {
+                            console.log(jqXHR.responseText);
+                            alert(jqXHR.responseText);
+                        },
                     });
-                
+
                     return false;
                 })
 
