@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuggyAi</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <header id="divHead">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div id="title" >
+                <h1>BuggyAI</h1>
+            </div>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Manual</a>
+                </li>
+              </ul>
+            </div>
+        </nav>
+    </header>
+    
+   
+
+    <div id="wrapper">
+
+        <form id="upload_form" enctype="multipart/form-data">
+            <label for="inputFile" class="btn btn-primary" id="imposter">Choose a picture</label>
+            <input type="file" hidden="hidden" name="inputFile" id="inputFile"/>
+            <button class="btn btn-primary" id="identify-bttn">Identify</button>
+        </form>
+
+        <div class="image-preview" id="imagePreview">
+            <img src="" alt="Image Preview" class="image-preview__image" id="user_image">
+            <span class="image-preview__default-text">Image Preview</span>
+        </div>
+
+        <h3>Prediction Results:</h3>
+        <p id="pred-window" name="pred-window"></p>
+    </div>
+
+    <script>
+        const inpFile = document.getElementById("inputFile");
+        const preivewContainer = document.getElementById("imagePreview");
+        const previewImage = preivewContainer.querySelector(".image-preview__image");
+        const previewDefaultText = preivewContainer.querySelector(".image-preview__default-text");
+
+        inpFile.addEventListener('change', function() {
+
+
+            const file = this.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                previewDefaultText.style.display = "none";
+                previewImage.style.display = "block";
+
+                reader.addEventListener("load", function() {
+                    previewImage.setAttribute("src", this.result);
+                });
+
+                reader.readAsDataURL(file);
+            } else {
+                previewDefaultText.style.display = null;
+                previewImage.style.display = null;
+                previewImage.setAttribute("src", "");
+            }
+        });
+        
+        const ident_button = document.getElementById("identify-bttn");
+
+        // ----- POST REQUEST -----
+        
+        ident_button.addEventListener('click', function() {
+            
+            // Check file image type .jpg or .jpeg / .png?
+            console.log("button pressed!");
+            
+            if(document.getElementById('user_image').getAttribute('src') != "") {
+
+                console.log('image uploaded now posting..')
+
+                $('#upload_form').submit(function() {
+
+                    let form = $('upload_form')[0];
+                    let formData = new FormData(form);
+                    
+                    $.ajax({
+                        url: 'http://45.56.92.210/prediction',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        type: 'POST',
+                        success: function(data){
+                            alert(data);
+                        }
+                        
+                    });
+                
+                    return false;
+                })
+
+                console.log('hopefully the post request was made')
+                
+            }
+
+            else {
+                console.log('No image uploaded!')
+            }    
+        });
+    
+
+        
+        
+    
+
+        /*
+        async function postRequest(usr_img) {
+
+            
+            const Url='http://127.0.0.1:5000/';
+            
+            const Data = {
+                img: usr_img
+            };
+
+            const otherParams = {
+                headers:{
+                    "Content-Type":"application/json; charset=UTF-8"
+                },
+                body:Data,
+                method:"POST"
+            };
+
+            fetch(Url, otherParams)
+            .then(data=>{return data.json()})
+            .then(res=>{console.log(res)})
+            .catch(error=>console.log(error))
+
+
+        }
+        */
+
+    </script>
+
+</body>
+
+</html>
